@@ -20,6 +20,7 @@ tests/
  ├── inventory/
  ├── cart/
  └── checkout/
+ 
 
 Cada funcionalidade possui seus próprios cenários de teste, organizados de forma independente para facilitar a manutenção e escalabilidade do projeto.
 

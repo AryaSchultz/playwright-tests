@@ -60,3 +60,54 @@ test('Validar se o botão de adicionar ao carrinho funciona', async ({ page }) =
     await expect(page.locator('.shopping_cart_badge')).toHaveText('1'); // valida se o carrinho tem 1 item
 
 });
+
+test('Validar se o botão de remover do carrinho funciona', async ({ page }) => {
+
+    const addToCartButton = page.locator('.btn_inventory');
+    await addToCartButton.first().click(); // clica no primeiro botão de adicionar ao carrinho  
+    await expect(page.locator('.shopping_cart_badge')).toHaveText('1'); // valida se o carrinho tem 1 item
+    await page.locator('.btn_inventory').first().click(); // clica no primeiro botão de remover do carrinho
+    await expect(page.locator('.shopping_cart_badge')).not.toBeVisible(); // valida se o carrinho não tem itens
+
+});
+
+test('Validar se o botão de adicionar ao carrinho muda para remover', async ({ page }) => {
+
+    const addToCartButton = page.locator('.btn_inventory');
+    await addToCartButton.first().click();  
+    await expect(addToCartButton.first()).toHaveText('Remove'); // valida se o botão mudou para remover
+
+});
+
+test('adiconar muitplos itens no carrinho e validar se o carrinho tem a quantidade correta', async ({ page }) => {
+
+    const addToCartButton = page.locator('.btn_inventory');
+    await addToCartButton.first().click(); 
+    await addToCartButton.nth(1).click();
+    await addToCartButton.nth(2).click();
+    await expect(page.locator('.shopping_cart_badge')).toHaveText('3'); // valida se o carrinho tem 3 itens
+
+});
+
+test('Remover um produdo do carrinho e validar se o carrinho tem a quantidade correta', async ({ page }) => {
+
+    const addToCartButton = page.locator('.btn_inventory');
+
+    await addToCartButton.first().click();
+    await page.click('.shopping_cart_link'); // clica no carrinho
+    await page.click('#remove-sauce-labs-backpack'); // clica no botão de remover do carrinho
+    await expect(page.locator('.shopping_cart_badge')).not.toBeVisible(); // valida se o carrinho não tem itens
+
+    });
+    
+test('Remover um produto quando tem varios adicionados no carrinho', async ({ page }) => {
+        const addToCartButton = page.locator('.btn_inventory');
+        await addToCartButton.first().click(); 
+        await addToCartButton.nth(1).click();
+        await addToCartButton.nth(2).click();
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('3'); // valida se o carrinho tem 3 itens
+        await page.click('.shopping_cart_link'); // clica no carrinho
+        await page.click('#remove-sauce-labs-backpack');
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('2'); // valida se o carrinho tem 2 itens
+
+    });
